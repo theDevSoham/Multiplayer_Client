@@ -27,6 +27,9 @@ public class UIManager : MonoBehaviour
 
     [Header("Connect")]
     [SerializeField] private GameObject connectUI;
+    [SerializeField] private GameObject hudUI;
+
+    [SerializeField] private TMP_Text displayHealth;
     [SerializeField] private TMP_InputField usernameField;
 
     private void Awake()
@@ -34,10 +37,17 @@ public class UIManager : MonoBehaviour
         Singleton = this;
     }
 
+    private void Start()
+    {
+        hudUI.SetActive(false);
+    }
+
     public void ConnectUIClicked()
     {
         usernameField.enabled = false;
         connectUI.SetActive(false);
+        hudUI.SetActive(true);
+        displayHealth.text = 100.ToString();
 
         NetworkManager.Singleton.Connect();
     }
@@ -47,6 +57,8 @@ public class UIManager : MonoBehaviour
         usernameField.enabled = true;
         usernameField.text = "";
         connectUI.SetActive(true);
+        hudUI.SetActive(false);
+        displayHealth.text = "????";
     }
 
     public void SendName()
